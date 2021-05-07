@@ -1,33 +1,3 @@
-Skip to content
-Search or jump to…
-
-Pull requests
-Issues
-Marketplace
-Explore
-
-@timothyquinlan1983
-krokhale
-    /
-    cohort12a - stock - api
-1
-00
-Code
-Issues
-Pull requests
-Actions
-Projects
-Wiki
-Security
-Insights
-cohort12a - stock - api / lib / models.js /
-@krokhale
-krokhale checking in
-    Latest commit 563a50b 22 days ago
-History
-1 contributor
-69 lines(54 sloc)  1.48 KB
-
 const { Sequelize, DataTypes, Model } = require('sequelize');
 const { sequelize } = require('../lib/db');
 // ORM
@@ -97,16 +67,3 @@ sequelize.sync({ alter: true });
 module.exports = {
     Portfolio, Wallet
 };
-© 2021 GitHub, Inc.
-    Terms
-Privacy
-Security
-Status
-Docs
-Contact GitHub
-Pricing
-API
-Training
-Blog
-About
-Loading complete
