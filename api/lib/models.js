@@ -3,58 +3,93 @@ const { sequelize } = require('../lib/db');
 // ORM
 
 
-
-class Portfolio extends Model {
+class User extends Model {
 
 }
 
-Portfolio.init({
+User.init({
     // Model attributes are defined here
-    symbol: {
-        type: DataTypes.STRING,
+    email: {
+        type: 'LONGTEXT',
         // allowNull: false
     },
-    quantity: {
-        type: DataTypes.INTEGER,
+    password: {
+        type: 'LONGTEXT',
         // allowNull: false
-    },
-    price: {
-        type: DataTypes.STRING
-        // float
-        // allowNull defaults to true
     },
 }, {
     // Other model options go here
     sequelize, // We need to pass the connection instance
-    modelName: 'Portfolio', // We need to choose the model name
+    modelName: 'User', // We need to choose the model name
 });
 
-class Wallet extends Model {
+class Category extends Model {
 
 }
 
-Wallet.init({
+Category.init({
     // Model attributes are defined here
-    value: {
+    name: {
         type: DataTypes.STRING,
         // allowNull: false
-    }
+    },
 }, {
     // Other model options go here
     sequelize, // We need to pass the connection instance
-    modelName: 'Wallet', // We need to choose the model name
+    modelName: 'Category', // We need to choose the model name
 });
 
-// If the wallet does not exist add a wallet
-const seedTheWallet = async () => {
-    let myWallet = await Wallet.findOne({});
-    if (!myWallet) {
-        await Wallet.create({ value: 100000 });
+class Question extends Model {
+
+}
+
+Question.init({
+    // Model attributes are defined here
+    questionTxt: {
+        type: 'LONGTEXT',
+        // allowNull: false
+    },
+}, {
+    // Other model options go here
+    sequelize, // We need to pass the connection instance
+    modelName: 'Question', // We need to choose the model name
+});
+
+Category.hasMany(Question, { foreignKey: 'categoryId' });
+Question.belongsTo(Category, { foreignKey: 'categoryId' });
+
+class Answer extends Model {
+
+}
+
+Answer.init({
+    // Model attributes are defined here
+    answerTxt: {
+        type: 'LONGTEXT',
+        // allowNull: false
+    },
+}, {
+    // Other model options go here
+    sequelize, // We need to pass the connection instance
+    modelName: 'Answer', // We need to choose the model name
+});
+
+Question.hasMany(Answer, { foreignKey: 'questionId' });
+Answer.belongsTo(Question, { foreignKey: 'questionId' });
+
+
+let seedCategories = async () => {
+    let categories = await Category.findAll({});
+    if (categories.length == 0) {
+        await Category.create({ name: 'Category 1' });
+        await Category.create({ name: 'Category 2' });
+        await Category.create({ name: 'Category 3' });
+        await Category.create({ name: 'Category 4' });
+        await Category.create({ name: 'Category 5' });
     }
-};
+}
 
-seedTheWallet()
-
+seedCategories()
 
 
 sequelize.sync({ alter: true });
@@ -65,5 +100,6 @@ sequelize.sync({ alter: true });
 // }
 
 module.exports = {
-    Portfolio, Wallet
+    // Portfolio, Wallet
+    Category, Question, User, Answer
 };
