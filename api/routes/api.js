@@ -40,6 +40,7 @@ router.get('/questions/:questionId/answers', async function (req, res, next) {
 // Create question - POST - /api/v1/questions
 router.post('/categories/:categoryId/questions', async function (req, res, next) {
     // write some code here to create a question
+    console.log('req.body', req.body);
     let question = await models.Question.create({ questionTxt: req.body.questionTxt, categoryId: req.params.categoryId });
     res.json(question);
 });
